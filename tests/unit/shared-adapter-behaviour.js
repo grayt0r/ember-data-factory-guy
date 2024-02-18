@@ -1654,7 +1654,7 @@ SharedBehavior.mockUpdateWithErrorMessages = function () {
 
       mockUpdate(profile).fails({
         status: 400,
-        response: { errors: { description: ['invalid data'] } },
+        response: { errors: [{ description: 'invalid data' }] },
         convertErrors: false,
       });
 
@@ -1662,7 +1662,7 @@ SharedBehavior.mockUpdateWithErrorMessages = function () {
       await profile.save().catch(function (reason) {
         let errors = reason.errors;
         assert.equal(
-          errors.description,
+          errors[0].description,
           'invalid data',
           'custom description shows up in errors'
         );

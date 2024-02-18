@@ -119,7 +119,7 @@ module(`Unit | Model | ${modelType}`, function (hooks) {
     let employee = make('employee');
     run(() => {
       assert.strictEqual(employee.get('titles.length'), 2);
-      assert.deepEqual(employee.get('titles.content'), ['Mr.', 'Dr.']);
+      assert.deepEqual(employee.get('titles').toArray(), ['Mr.', 'Dr.']);
     });
   });
 

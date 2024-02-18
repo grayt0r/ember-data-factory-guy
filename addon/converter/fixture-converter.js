@@ -241,7 +241,7 @@ export default class FixtureConverter {
         .serialize()
         .map(
           (item) =>
-            this.store.normalize(attributeValueInFixture.type, item).data
+            this.store.normalize(attributeValueInFixture.modelName, item).data
               .attributes
         );
     }

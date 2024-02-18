@@ -335,6 +335,22 @@ SharedBehavior.makeTests = function () {
     );
   });
 
+  test('handles fragmentArray relationships (makeList, single model)', function (assert) {
+    let departmentEmployments = makeList('department-employment', {});
+
+    let employee = make('employee', { departmentEmployments });
+
+    assert.equal(employee.departmentEmployments.length, 1);
+  });
+
+  test('handles fragmentArray relationships (makeList, multiple models)', function (assert) {
+    let departmentEmployments = makeList('department-employment', 2);
+
+    let employee = make('employee', { departmentEmployments });
+
+    assert.equal(employee.departmentEmployments.length, 2);
+  });
+
   test('using afterMake with transient attributes in definition', function (assert) {
     run(function () {
       let property = FactoryGuy.make('property');

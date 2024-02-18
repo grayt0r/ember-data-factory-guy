@@ -204,7 +204,10 @@ export default class FixtureConverter {
         // If passed Fragments or FragmentArrays we must transform them to their serialized form before we can push them into the Store
         if (
           (Fragment && attributeValueInFixture instanceof Fragment) ||
-          (FragmentArray && attributeValueInFixture instanceof FragmentArray)
+          (FragmentArray && attributeValueInFixture instanceof FragmentArray) ||
+          (Fragment &&
+            Array.isArray(attributeValueInFixture) &&
+            attributeValueInFixture.every((value) => value instanceof Fragment))
         ) {
           fixture[attributeKey] = this.normalizeModelFragments(
             attributeValueInFixture
@@ -244,6 +247,16 @@ export default class FixtureConverter {
             this.store.normalize(attributeValueInFixture.modelName, item).data
               .attributes
         );
+    }
+    if (
+      Fragment &&
+      Array.isArray(attributeValueInFixture) &&
+      attributeValueInFixture.every((value) => value instanceof Fragment)
+    ) {
+      return attributeValueInFixture.map(
+        (item) =>
+          this.store.normalize(item.constructor.modelName, item).data.attributes
+      );
     }
   }
 
